@@ -1,5 +1,9 @@
 let gameScore = { user: 0, computer: 0 };
 const patterns = ["paper", "scissors", "rock"];
+let computerOption = "";
+let userInput = "";
+let turn = 0;
+let spelling = false;
 function computerPlay() {
     const randomChoice = Math.floor(Math.random() * 3);
 
@@ -35,33 +39,31 @@ function didWin(userInput, computerOption) {
         return "its a tie!";
     }
 }
-
-let computerOption = "";
-let userInput = "";
-let turn = 0;
-let spelling = false;
-for (turn; turn < 5; turn++) {
-    while (!spelling) {
-        userInput = window.prompt("Your choise: ").toLowerCase();
-        spelling = patterns.includes(userInput);
-    }
-    spelling = false;
-    computerOption = computerPlay();
-    console.log("------------------------");
-    console.log(didWin(userInput, computerOption));
-    console.log(
-        `Game score: You ${gameScore.user}:${gameScore.computer} Computer`
-    );
-    if (turn != 4) {
-        console.log(`${4 - turn}turns left`);
-    } else {
-        if (gameScore.user > gameScore.computer) {
-            console.log("Congrats you won!");
-        } else if (gameScore.user < gameScore.computer) {
-            console.log("Good luck next time!");
-        } else {
-            console.log("Its a tie!");
+function game() {
+    for (turn; turn < 5; turn++) {
+        while (!spelling) {
+            userInput = window.prompt("Your choise: ").toLowerCase();
+            spelling = patterns.includes(userInput);
         }
+        spelling = false;
+        computerOption = computerPlay();
+        console.log("------------------------");
+        console.log(didWin(userInput, computerOption));
+        console.log(
+            `Game score: You ${gameScore.user}:${gameScore.computer} Computer`
+        );
+        if (turn != 4) {
+            console.log(`${4 - turn}turns left`);
+        } else {
+            if (gameScore.user > gameScore.computer) {
+                console.log("Congrats you won!");
+            } else if (gameScore.user < gameScore.computer) {
+                console.log("Good luck next time!");
+            } else {
+                console.log("Its a tie!");
+            }
+        }
+        console.log("------------------------");
     }
-    console.log("------------------------");
 }
+game();
