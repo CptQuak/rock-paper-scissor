@@ -1,18 +1,12 @@
 let gameScore = { user: 0, computer: 0 };
+const patterns = ["paper", "scissors", "rock"];
 function computerPlay() {
-    const randomChoice = Math.floor(Math.random() * 3) + 1;
-    switch (randomChoice) {
-        case 1:
-            return "rock";
-        case 2:
-            return "scissors";
-        case 3:
-            return "paper";
-    }
+    const randomChoice = Math.floor(Math.random() * 3);
+
+    return patterns[randomChoice];
 }
 
 function didWin(userInput, computerOption) {
-    const patterns = ["paper", "scissors", "rock"];
     let user = null;
     let computer = null;
     for (let pattern in patterns) {
@@ -45,14 +39,29 @@ function didWin(userInput, computerOption) {
 let computerOption = "";
 let userInput = "";
 let turn = 0;
+let spelling = false;
 for (turn; turn < 5; turn++) {
-    userInput = window.prompt("Your choise: ").toLowerCase();
+    while (!spelling) {
+        userInput = window.prompt("Your choise: ").toLowerCase();
+        spelling = patterns.includes(userInput);
+    }
+    spelling = false;
     computerOption = computerPlay();
     console.log("------------------------");
     console.log(didWin(userInput, computerOption));
     console.log(
         `Game score: You ${gameScore.user}:${gameScore.computer} Computer`
     );
-    console.log(`${4 - turn}turns left`);
+    if (turn != 4) {
+        console.log(`${4 - turn}turns left`);
+    } else {
+        if (gameScore.user > gameScore.computer) {
+            console.log("Congrats you won!");
+        } else if (gameScore.user < gameScore.computer) {
+            console.log("Good luck next time!");
+        } else {
+            console.log("Its a tie!");
+        }
+    }
     console.log("------------------------");
 }
