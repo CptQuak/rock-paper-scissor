@@ -4,6 +4,10 @@ let computerOption = "";
 let userInput = "";
 let turn = 0;
 let startRound = false;
+const scoreHolder = document.querySelector(".gamescore");
+const gameInfo = document.querySelector(".gameinfo");
+const buttons = document.querySelectorAll("button");
+
 function computerPlay() {
     const randomChoice = Math.floor(Math.random() * 3);
     return patterns[randomChoice];
@@ -39,40 +43,30 @@ function playRound(userInput, computerOption) {
     }
 }
 
-const buttons = document.querySelectorAll("button");
+function updateScore() {
+    scoreHolder.textContent = `player ${gameScore.user}:${gameScore.computer} computer`;
+}
+
 buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
-        console.log(
-            playRound(button.textContent.toLowerCase(), computerPlay())
-        );
+        if (turn < 5) {
+            console.log(
+                (gameInfo.textContent = playRound(
+                    button.textContent.toLowerCase(),
+                    computerPlay()
+                ))
+            );
+            updateScore();
+            turn++;
+        }
+        if (turn == 5) {
+            if (gameScore.user > gameScore.computer) {
+                gameInfo.textContent = "Congrats you won!";
+            } else if (gameScore.user < gameScore.computer) {
+                gameInfo.textContent = "Good luck next time!";
+            } else {
+                gameInfo.textContent = "Its a tie!";
+            }
+        }
     });
 });
-
-// function game() {
-//     for (turn; turn < 5; turn++) {
-//         while (!startRound) {
-//             userInput = window.prompt("Your choise: ").toLowerCase();
-//             startRound = patterns.includes(userInput);
-//         }
-//         startRound = false;
-//         computerOption = computerPlay();
-//         console.log("------------------------");
-//         console.log(playRound(userInput, computerOption));
-//         console.log(
-//             `Game score: You ${gameScore.user}:${gameScore.computer} Computer`
-//         );
-//         if (turn != 4) {
-//             console.log(`${4 - turn}turns left`);
-//         } else {
-//             if (gameScore.user > gameScore.computer) {
-//                 console.log("Congrats you won!");
-//             } else if (gameScore.user < gameScore.computer) {
-//                 console.log("Good luck next time!");
-//             } else {
-//                 console.log("Its a tie!");
-//             }
-//         }
-//         console.log("------------------------");
-//     }
-// }
-// game();
